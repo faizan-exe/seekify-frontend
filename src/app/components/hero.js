@@ -21,7 +21,7 @@ function Hero() {
     };
 
     return (
-        <form onSubmit={handleSearch} className="hero min-h-screen bg-base-200 ">
+        <form onSubmit={handleSearch} className="hero min-h-screen text-base-content">
             <div className="hero-content text-center flex flex-col">
                 <div className="max-w">
                     <h1 className="text-5xl font-bold">Seekify - Search Engine</h1>
