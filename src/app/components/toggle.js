@@ -18,7 +18,7 @@ function Toggle() {
   };
 
   return (
-    <div className="flex sticky top-0 justify-end items-center">
+    <div className="flex text-white sticky top-0 justify-end items-center">
       <label className="mt-3 swap swap-rotate mr-4">
         {/* this hidden checkbox controls the state */}
         <input
