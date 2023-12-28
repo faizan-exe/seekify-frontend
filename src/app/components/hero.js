@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Articles from "./articles";
 import Loader from "./loader";
+import File from './file';
 
 function Hero() {
     const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +30,8 @@ function Hero() {
                     <input type="text" placeholder="Type here" className="input input-bordered input-primary w-full max-w-xs" />
                     <button className="btn btn-primary ml-4" type="submit">Search</button>
                 </div>
+
+                <File />
             
                 {isLoading && 
                 (
