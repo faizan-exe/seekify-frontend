@@ -1,53 +1,50 @@
 import { NextResponse } from "next/server";
 
+export async function POST(req) {
+  try {
+    const { query } = await req.json();
+    console.log("query", query);
 
-export async function POST(req, res) {
-    try {
-      const { query } = await req.json();
-      console.log("query", query);
-  
-      // Dummy API response data (replace this with your dummy data)
+    let articles = []; // Initialize articles array
 
-      // add the api
+    // First, fetch the search results
+    const searchResponse = await fetch('https://localhost:3001/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query: query }), // Send the search query in the request body
+    });
 
-    //   try {
-    //     const response = await fetch('/api/searchArticles', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify({ query: query }), // Send the search query in the request body
-    //     });
-  
-    //     if (response.ok) {
-    //       const dummyData = await response.json();
-    //       // Handle the response data (e.g., set it in state)
-    //       // For example, if the response contains search results:
-    //     } else {
-    //       console.error('Failed to fetch search results');
-    //     }
-    //   } catch (error) {
-    //     console.error('Error:', error);
-    //   }
+    if (searchResponse.ok) {
+      const searchResults = await searchResponse.json();
 
+      // Then, use the search results to fetch the display data
+      const displayResponse = await fetch('https://localhost:3001/display', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ docs: searchResults, size: 10, offset: 0 }), // Send the search results in the request body
+      });
 
-      const dummyData = {
-        articles: [
-          { id: 1, title: 'Article 1', content: 'Content for Article 1' },
-          { id: 2, title: 'Article 2', content: 'Content for Article 2' },
-          { id: 3, title: 'Article 3', content: 'Content for Article 3' },
-        ],
-      };
-  
-      // Simulate a delay to mimic an actual API call
-    
-        return NextResponse.json({
-            data: dummyData
-          });
-    
-    } catch (error) {
-      console.error("Error in POST", error);
-    //   res.status(500).json({ error: 'An error occurred' });
+      if (displayResponse.ok) {
+        articles = await displayResponse.json(); // Set the articles to the response from the display endpoint
+      } else {
+        console.error('Failed to fetch display results');
+      }
+    } else {
+      console.error('Failed to fetch search results');
     }
+
+    // Return the articles in the response
+    return NextResponse.json({
+      data: articles
+    });
+
+  } catch (error) {
+    console.error("Error in POST", error);
+    // Return an error response
+    return NextResponse.json({ error: 'An error occurred' });
   }
-  
+}

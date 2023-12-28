@@ -1,47 +1,42 @@
-"use client";
+'use client';
 
 import React, { useState } from 'react';
-import Articles from "./articles";
-import Loader from "./loader";
-import File from './file';
+import Articles from "./articles"; // Ensure this path is correct
+import Loader from "./loader"; // Ensure this path is correct
+import File from './file'; // Ensure this path is correct
 
 function Hero() {
     const [isLoading, setIsLoading] = useState(false);
-    const [showArticles, setShowArticles] = useState(false);
+    const [searchPerformed, setSearchPerformed] = useState(false); // Track if a search has been performed
     const [searchQuery, setSearchQuery] = useState('');
     const [articles, setArticles] = useState([]);
 
     const handleSearch = async (e) => {
         e.preventDefault();
-        setShowArticles(false);
         setIsLoading(true);
+        setSearchPerformed(true); // Indicate that a search has been performed
 
-
-     try {
+        try {
             const response = await fetch('/api/searchArticles', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ query: searchQuery }), // Send the search query in the request body
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: searchQuery }),
             });
-      
+
             if (response.ok) {
-              const data = await response.json();
-              // Handle the response data (e.g., set it in state)
-              // For example, if the response contains search results:
-              setArticles(data.data.articles);
+                const data = await response.json();
+                setArticles(data.data.articles);
             } else {
-              console.error('Failed to fetch search results');
+                console.error('Failed to fetch search results');
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Error:', error);
-          } finally {
+        } finally {
             setIsLoading(false);
-            setShowArticles(true);
-          }
-        };
-      
+        }
+    };
 
     return (
         <form onSubmit={handleSearch} className="hero min-h-screen text-base-content">
@@ -56,14 +51,14 @@ function Hero() {
 
                 <File />
 
-                {isLoading &&
-                    (
-                        <div className='flex flex-row'>
-                            <Loader />
-                        </div>)}
+                {isLoading && (
+                    <div className='flex flex-row'>
+                        <Loader />
+                    </div>
+                )}
 
-
-                {articles && (<Articles articles={articles} />
+                {!isLoading && searchPerformed && (
+                    <Articles articles={articles} />
                 )}
             </div>
         </form>
