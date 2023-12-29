@@ -65,7 +65,8 @@ function Hero() {
 
             if (response.ok) {
                 const data = await response.json();
-                setArticles(data.data.articles);
+                console.log(data);
+                setArticles(data.data);
             } else {
                 console.error('Failed to fetch search results');
             }
@@ -96,7 +97,7 @@ function Hero() {
                 )}
 
                 {!isLoading && searchPerformed && (
-                    <Articles articles={Object.values(articles)} />
+                    <Articles articles={articles} />
                 )}
             </div>
         </form>

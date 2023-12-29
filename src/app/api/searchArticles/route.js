@@ -25,9 +25,10 @@ export async function POST(req) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ docs: searchResults, size: 10, offset: 0 }), // Send the search results in the request body
+        body: JSON.stringify({ docs: searchResults }), // Send the search results in the request body
       });
 
+      
       if (displayResponse.ok) {
         articles = await displayResponse.json(); // Set the articles to the response from the display endpoint
       } else {
