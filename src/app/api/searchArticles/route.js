@@ -8,7 +8,7 @@ export async function POST(req) {
     let articles = []; // Initialize articles array
 
     // First, fetch the search results
-    const searchResponse = await fetch('https://localhost:3001/search', {
+    const searchResponse = await fetch('http://localhost:3001/search', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ export async function POST(req) {
       const searchResults = await searchResponse.json();
 
       // Then, use the search results to fetch the display data
-      const displayResponse = await fetch('https://localhost:3001/display', {
+      const displayResponse = await fetch('http://localhost:3001/display', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
