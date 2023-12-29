@@ -12,12 +12,16 @@ function Articles({ articles }) {
 
   // Render articles if they exist
   return (
-    <div className="flex mt-7 flex-col w-[50vh] border-opacity-50">
+    <div className="flex mt-7 flex-col w-[55vh] border-opacity-50">
       {articles.map((article, index) => (
         <React.Fragment key={index}>
           <div className="divider"></div>
-          <div className="grid h-10 card bg-base-300 rounded-box place-items-center">
-            {article.title}
+          <div className="grid h-20 px-2 card bg-base-300 rounded-box place-items-center">
+            {/* Access the title of the article directly */}
+            {article.t}
+            <br />
+            <a href={article.u} target='_blank'>{article.u} </a>
+          
           </div>
         </React.Fragment>
       ))}

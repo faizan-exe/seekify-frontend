@@ -9,7 +9,45 @@ function Hero() {
     const [isLoading, setIsLoading] = useState(false);
     const [searchPerformed, setSearchPerformed] = useState(false); // Track if a search has been performed
     const [searchQuery, setSearchQuery] = useState('');
-    const [articles, setArticles] = useState([]);
+    const [articles, setArticles] = useState({
+        "1": {
+          "t": "The Future of Renewable Energy",
+          "a": "Alex Johnson",
+          "u": "https://example.com/future-renewable-energy",
+          "s": "example.com"
+        },
+        "2": {
+          "t": "Advances in Artificial Intelligence",
+          "a": "Samantha Reed",
+          "u": "https://example.com/advances-in-ai",
+          "s": "example.com"
+        },
+        "3": {
+          "t": "Exploring the Depths: Ocean Conservation Efforts",
+          "a": "Raj Patel",
+          "u": "https://example.com/ocean-conservation",
+          "s": "example.com"
+        },
+        "4": {
+          "t": "Breaking Barriers: Women in STEM",
+          "a": "Maria Gomez",
+          "u": "https://example.com/women-in-stem",
+          "s": "example.com"
+        },
+        "5": {
+          "t": "The Impacts of Climate Change on Agriculture",
+          "a": "Chen Wu",
+          "u": "https://example.com/climate-change-agriculture",
+          "s": "example.com"
+        },
+        "6": {
+          "t": "The Evolution of the Internet of Things",
+          "a": "John Smith",
+          "u": "https://example.com/internet-of-things",
+          "s": "example.com"
+        }
+      }
+      );
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -58,7 +96,7 @@ function Hero() {
                 )}
 
                 {!isLoading && searchPerformed && (
-                    <Articles articles={articles} />
+                    <Articles articles={Object.values(articles)} />
                 )}
             </div>
         </form>
